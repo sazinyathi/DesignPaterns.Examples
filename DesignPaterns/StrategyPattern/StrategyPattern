@@ -1,0 +1,3 @@
+Strategy Pattern
+This pattern is intend to demostrate that inheretance is not a best way to for code re-use but composition is best way.
+e.g. You have employee types that are FullTimeEmployee and you want to calculate Bonus and Leave for these employeetypes.

@@ -1,0 +1,15 @@
+Decoractor Pattern
+This pattern demostrate how the state of change can be publish to client.
+eg. WeatherStation will be responsible to publish a new tempature to WindowPhone Application.
+There is an Observable and Observor.
+The Observable Interface will have the following functons or algorithims
+   void Add(IObserver observer)
+   Void Remove(IObserver observer)
+   Void Notify();
+The weatherContrict Class will implement the IObservable Interface
+The weatherContrict Class will have a GetTempeture()
+
+The Observor Interface will have the following functions
+    void Update();
+The windowPhoneContrict Class will implement the IObserver Interface.
+
