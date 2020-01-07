@@ -1,4 +1,6 @@
 ﻿using DesignPaterns.DecoratorPattern.Models;
+using DesignPaterns.DecoratorPattern.Models.Cups;
+using DesignPaterns.FactoryPattern.Factory;
 
 namespace DesignPaterns.DecoratorPattern
 {
@@ -10,7 +12,19 @@ namespace DesignPaterns.DecoratorPattern
         private BeverageComponent beverageComponent;
         private DoubleShortAndCaramelDecorator doubleDoubleShortAndCaramelDecorator;
         private BlackCoffeeDecorator blackCoffeeDecorator;
+        private CupsFactory cupsManagerFactory;
 
+        private CupsFactory CupsFactory
+        {
+            get
+            {
+                if(cupsManagerFactory == null)
+                {
+                    cupsManagerFactory = new CupsFactory();
+                }
+                return cupsManagerFactory;
+            }
+        }
         public BlackCoffeeDecorator BlackCoffeeDecorator
         {
             get
@@ -61,24 +75,38 @@ namespace DesignPaterns.DecoratorPattern
             }
         }
 
-        public decimal ExpressWithDoubleShort()
+        private decimal CostOfCupsSize(Cups cups)
         {
-            return DoubleShortDecorator.Cost();
+            var costOfCupSize = CupsFactory.CreateCups(cups).ApplyCupsCost();
+            return costOfCupSize.CostOfCup;
+        }
+        public decimal ExpressWithDoubleShort(Cups cup,int sizeOfCup = (int)CupsSize.smallCupSize)
+        {
+           
+            return DoubleShortDecorator.Cost() + CostOfCupsSize(cup);
         }
 
-        public decimal ExpressWithCaramel()
+        public decimal ExpressWithCaramel(Cups cup,int sizeOfCup = (int)CupsSize.smallCupSize)
         {
-            return CaramelDecorator.Cost();
+            return CaramelDecorator.Cost() + CostOfCupsSize(cup);
         }
 
-        public decimal ExpressWithCaramelAndDoubleShort()
+        public decimal ExpressWithCaramelAndDoubleShort(Cups cup,int sizeOfCup = (int)CupsSize.smallCupSize)
         {
-            return DoubleShortAndCaramelDecorator.Cost();
+            return DoubleShortAndCaramelDecorator.Cost() + CostOfCupsSize(cup);
         }
 
-        public decimal BlackCoffee()
+        public decimal BlackCoffee(Cups cup,int sizeOfCup = (int)CupsSize.smallCupSize)
         {
-            return BlackCoffeeDecorator.Cost();
+            return BlackCoffeeDecorator.Cost() + CostOfCupsSize(cup);
+        }
+
+        public enum CupsSize
+        {
+            smallCupSize =  1,
+            mediumCupSize = 2,
+            largeCupSize = 3,
+            extraLargeCupSize = 4
         }
     }
 }
